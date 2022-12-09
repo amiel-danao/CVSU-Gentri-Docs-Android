@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.firebase.ui.auth">
+    package="com.cvsu_gentri_docs_android.ui.auth">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,74 +28,74 @@
             android:value="@string/facebook_application_id" />
 
         <activity
-            android:name=".KickoffActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.KickoffActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/FirebaseUI.Transparent" />
 
         <activity
-            android:name=".ui.idp.SingleSignInActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.idp.SingleSignInActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/FirebaseUI.Transparent" />
 
         <activity
-            android:name=".ui.credentials.CredentialSaveActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.credentials.CredentialSaveActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/FirebaseUI.Transparent" />
 
         <activity
-            android:name=".ui.email.RecoverPasswordActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.RecoverPasswordActivity"
             android:label="@string/fui_title_recover_password_activity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.email.EmailActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.EmailActivity"
             android:label="@string/fui_sign_in_default"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.phone.PhoneActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.phone.PhoneActivity"
             android:label="@string/fui_sign_in_with_phone_number"
             android:exported="false"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
 
         <activity
-            android:name=".ui.idp.WelcomeBackIdpPrompt"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.idp.WelcomeBackIdpPrompt"
             android:label="@string/fui_title_welcome_back_idp_prompt"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.email.WelcomeBackPasswordPrompt"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.WelcomeBackPasswordPrompt"
             android:label="@string/fui_title_welcome_back_password_prompt"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.email.WelcomeBackEmailLinkPrompt"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.WelcomeBackEmailLinkPrompt"
             android:label="@string/fui_title_welcome_back_password_prompt"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.email.EmailLinkCatcherActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.EmailLinkCatcherActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/FirebaseUI.Transparent"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.email.EmailLinkErrorRecoveryActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.email.EmailLinkErrorRecoveryActivity"
             android:label="@string/fui_sign_in_default"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.idp.AuthMethodPickerActivity"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.ui.idp.AuthMethodPickerActivity"
             android:label="@string/fui_default_toolbar_title"
             android:exported="false" />
 
@@ -120,7 +120,7 @@
         </activity>
 
         <provider
-            android:name=".data.client.AuthUiInitProvider"
+            android:name="com.cvsu_gentri_docs_android.ui.auth.data.client.AuthUiInitProvider"
             android:authorities="${applicationId}.authuiinitprovider"
             android:exported="false"
             android:initOrder="90" />

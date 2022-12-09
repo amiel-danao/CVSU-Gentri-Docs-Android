@@ -30,7 +30,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/phone_layout"
                 tools:ignore="RtlHardcoded">
 
-                <com.firebase.ui.auth.ui.phone.CountryListSpinner
+                <com.cvsu_gentri_docs_android.ui.auth.ui.phone.CountryListSpinner
                     android:id="@+id/country_list"
                     style="@style/FirebaseUI.CountrySpinner"
                     android:minEms="5"

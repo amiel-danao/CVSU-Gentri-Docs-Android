@@ -1,1 +1,1 @@
--dontwarn com.firebase.ui.firestore.paging.**
+-dontwarn com.cvsu_gentri_docs_android.ui.firestore.paging.**

@@ -7,8 +7,8 @@
         android:shortcutShortLabel="@string/title_auth_activity">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.firebase.uidemo"
-            android:targetClass="com.firebase.uidemo.auth.AuthUiActivity"/>
+            android:targetPackage="com.cvsu_gentri_docs_android.uidemo"
+            android:targetClass="com.cvsu_gentri_docs_android.auth.AuthUiActivity"/>
     </shortcut>
 
     <shortcut
@@ -18,8 +18,8 @@
         android:shortcutShortLabel="@string/title_firestore_activity">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.firebase.uidemo"
-            android:targetClass="com.firebase.uidemo.database.firestore.FirestoreChatActivity"/>
+            android:targetPackage="com.cvsu_gentri_docs_android.uidemo"
+            android:targetClass="com.cvsu_gentri_docs_android.database.firestore.FirestoreChatActivity"/>
     </shortcut>
 
     <shortcut
@@ -29,8 +29,8 @@
         android:shortcutShortLabel="@string/title_realtime_database_activity">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.firebase.uidemo"
-            android:targetClass="com.firebase.uidemo.database.realtime.RealtimeDbChatActivity"/>
+            android:targetPackage="com.cvsu_gentri_docs_android.uidemo"
+            android:targetClass="com.cvsu_gentri_docs_android.database.realtime.RealtimeDbChatActivity"/>
     </shortcut>
 
     <shortcut
@@ -40,7 +40,7 @@
         android:shortcutShortLabel="@string/title_storage_activity">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.firebase.uidemo"
-            android:targetClass="com.firebase.uidemo.storage.ImageActivity"/>
+            android:targetPackage="com.cvsu_gentri_docs_android.uidemo"
+            android:targetClass="com.cvsu_gentri_docs_android.storage.ImageActivity"/>
     </shortcut>
 </shortcuts>
