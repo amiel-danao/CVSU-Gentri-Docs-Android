@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "713790317360",
+    "project_id": "cvsu-gentri-docs",
+    "storage_bucket": "cvsu-gentri-docs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713790317360:android:d31a0d8742d1492afc9ef5",
+        "android_client_info": {
+          "package_name": "com.cvsu_gentri_docs_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713790317360-1jeqr0t3bshttsif830geus722asilrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cvsu_gentri_docs_android",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "713790317360-qutoubdkck35u2jsufjhprlgu598m4th.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhaGeu_7AGTnmSAJMyApPAbgy22bYjkak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713790317360-qutoubdkck35u2jsufjhprlgu598m4th.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

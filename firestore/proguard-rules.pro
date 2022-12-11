@@ -1,1 +1,0 @@
--dontwarn com.cvsu_gentri_docs_android.ui.firestore.paging.**
