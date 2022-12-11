@@ -15,14 +15,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-import '../api/pet_controller.dart';
+import '../api/student_controller.dart';
 import '../env.sample.dart';
 import '../widgets/profile_widgets.dart';
-import 'chat_list_page.dart';
+import 'my_documents_page.dart';
 
 class ProfilePage extends StatelessWidget {
-  final Customer currentCustomer;
-  ProfilePage({Key? key, required this.currentCustomer}) : super(key: key);
+  final Student currentStudent;
+  ProfilePage({Key? key, required this.currentStudent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,13 @@ class ProfilePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ProfilePageState(currentCustomer: currentCustomer),
+      body: ProfilePageState(currentCustomer: currentStudent),
     );
   }
 }
 
 class ProfilePageState extends StatefulWidget {
-  final Customer currentCustomer;
+  final Student currentCustomer;
   ProfilePageState({Key? key, required this.currentCustomer}) : super(key: key);
 
   @override
@@ -98,7 +98,7 @@ class ProfilePageStateState extends State<ProfilePageState> {
     });
 
     String uid = widget.currentCustomer.id;
-    Customer updatedCustomer = new Customer(
+    Student updatedStudent = new Student(
         id: uid,
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
@@ -106,11 +106,11 @@ class ProfilePageStateState extends State<ProfilePageState> {
         middleName: _middleNameController.text,
         mobile: _mobileController.text);
 
-    final jsonData = jsonEncode(updatedCustomer.toJson());
+    final jsonData = jsonEncode(updatedStudent.toJson());
 
     try {
       final patchResponse = await http.patch(
-        Uri.parse('${Env.URL_CUSTOMER}/${widget.currentCustomer.id}'),
+        Uri.parse('${Env.URL_STUDENT}/${widget.currentCustomer.id}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -123,12 +123,12 @@ class ProfilePageStateState extends State<ProfilePageState> {
           isLoading = false;
         });
 
-        updatedCustomer = Customer.fromJson(jsonDecode(patchResponse.body));
+        updatedStudent = Student.fromJson(jsonDecode(patchResponse.body));
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    ChatListPage(currentCustomer: updatedCustomer)));
+                    MyDocumentsPage(currentStudent: updatedStudent)));
       }
 
       print("Update failed : ${patchResponse.body.toString()}");
@@ -229,6 +229,8 @@ class ProfilePageStateState extends State<ProfilePageState> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        const SizedBox(height: 15.0),
+                        Text('Student No.'),
                         const SizedBox(height: 30.0),
                         ProfileAccountName(
                           controller: _firstNameController,
@@ -261,7 +263,7 @@ class ProfilePageStateState extends State<ProfilePageState> {
                           },
                         ),
                         const SizedBox(height: 30.0),
-                        ProfileAccountEmail(emailController: _emailController),
+                        ProfileAccountEmail(emailController: _emailController, readOnly: true,),
                         const SizedBox(height: 30.0),
                         ProfileAccountPhone(phoneController: _mobileController),
                         const SizedBox(height: 30.0),

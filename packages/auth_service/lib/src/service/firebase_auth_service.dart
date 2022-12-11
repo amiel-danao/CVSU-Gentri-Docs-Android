@@ -9,10 +9,10 @@ class FirebaseAuthService implements AuthService {
 
   final auth.FirebaseAuth _firebaseAuth;
 
-  Customer _mapFirebaseUser(
+  Student _mapFirebaseUser(
       auth.User? user, String firstName, String middleName, String lastName) {
     if (user == null) {
-      return Customer.empty();
+      return Student.empty();
     }
 
     final map = <String, dynamic>{
@@ -22,20 +22,20 @@ class FirebaseAuthService implements AuthService {
       'lastname': lastName,
       'email': user.email ?? ''
     };
-    return Customer.fromJson(map);
+    return Student.fromJson(map);
   }
 
-  Customer _mapFirebaseUserLogin(auth.User? user) {
+  Student _mapFirebaseUserLogin(auth.User? user) {
     if (user == null) {
-      return Customer.empty();
+      return Student.empty();
     }
 
     final map = <String, dynamic>{'id': user.uid, 'email': user.email ?? ''};
-    return Customer.fromJson(map);
+    return Student.fromJson(map);
   }
 
   @override
-  Future<Customer> signInWithEmailAndPassword({
+  Future<Student> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -52,7 +52,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<Customer> createUserWithEmailAndPassword({
+  Future<Student> createUserWithEmailAndPassword({
     required String firstName,
     required String middleName,
     required String lastName,

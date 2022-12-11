@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:email_validator/email_validator.dart';
 
-import '../../api/customer_controller.dart';
+import '../../api/student_controller.dart';
 import '../../constants/app_constants.dart';
 import '../../constants/color_constants.dart';
 import '../../providers/auth_provider.dart';
@@ -32,8 +32,8 @@ class LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    _emailController = TextEditingController(text: "amiel.tbpo@gmail.com");
+    _passwordController = TextEditingController(text: "notCommonPassword123\$");
   }
 
   @override
@@ -54,6 +54,7 @@ class LoginViewState extends State<LoginView> {
               height: 150,
               child: Image.asset('images/app_logo.png')),
         ),
+        const SizedBox(height: 30.0),
         Center(
           child: DecoratedBox(
             decoration:
@@ -124,6 +125,12 @@ class SubmitState extends State<_SubmitButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstants.themeColor,
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                textStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
       onPressed: () async {
         if (widget.formKey.currentState!.validate()) {
           try {

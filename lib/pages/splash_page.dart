@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../env.sample.dart';
 import '../login/view/login_view.dart';
-import 'pages.dart';
+import 'my_documents_page.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key? key}) : super(key: key);
@@ -42,14 +42,14 @@ class SplashPageState extends State<SplashPage> {
       }
 
       final response =
-          await http.get(Uri.parse('${Env.URL_CUSTOMER}/$loggedInUid'));
+          await http.get(Uri.parse('${Env.URL_STUDENT}/$loggedInUid'));
 
       if (response.statusCode == 200) {
-        Customer customer = Customer.fromJson(jsonDecode(response.body));
+        Student customer = Student.fromJson(jsonDecode(response.body));
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatListPage(currentCustomer: customer),
+              builder: (context) => MyDocumentsPage(currentStudent: customer),
             ));
       } else {
         gotoLoginPage();

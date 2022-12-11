@@ -1,12 +1,12 @@
 import '../models/models.dart';
 
 abstract class AuthService {
-  Future<Customer> signInWithEmailAndPassword({
+  Future<Student> signInWithEmailAndPassword({
     required String email,
     required String password,
   });
 
-  Future<Customer> createUserWithEmailAndPassword({
+  Future<Student> createUserWithEmailAndPassword({
     required String firstName,
     required String middleName,
     required String lastName,

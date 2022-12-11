@@ -65,8 +65,10 @@ class ProfileAccountEmail extends StatelessWidget {
   ProfileAccountEmail({
     Key? key,
     required this.emailController,
+    this.readOnly = false
   }) : super(key: key);
   final TextEditingController emailController;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,7 @@ class ProfileAccountEmail extends StatelessWidget {
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
         child: TextFormField(
+          readOnly: readOnly,
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
           validator: (value) => EmailValidator.validate(value!)

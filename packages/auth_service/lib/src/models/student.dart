@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class Customer extends Equatable {
-  const Customer({
+class Student extends Equatable {
+  const Student({
     required this.id,
+    this.studentID,
     required this.firstName,
     this.middleName,
     required this.lastName,
@@ -12,6 +13,7 @@ class Customer extends Equatable {
   });
 
   final String id;
+  final String? studentID;
   final String firstName;
   final String? middleName;
   final String lastName;
@@ -19,8 +21,9 @@ class Customer extends Equatable {
   final String? mobile;
   final String? picture;
 
-  factory Customer.fromJson(Map<String, dynamic> json) => Customer(
+  factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json['id'] ?? "",
+        studentID: json['student_id'] ?? "",
         firstName: json['firstname'] ?? "",
         middleName: json['middlename'] ?? "",
         lastName: json['lastname'] ?? "",
@@ -31,6 +34,7 @@ class Customer extends Equatable {
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
+        'student_id': studentID,
         'firstname': firstName,
         'middlename': middleName,
         'lastname': lastName,
@@ -38,8 +42,9 @@ class Customer extends Equatable {
         'mobile': mobile
       };
 
-  factory Customer.empty() => const Customer(
+  factory Student.empty() => const Student(
         id: "",
+        studentID: "",
         firstName: "",
         middleName: "",
         lastName: "",

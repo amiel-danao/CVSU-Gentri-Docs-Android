@@ -4,7 +4,7 @@ Widget backgroundWidget() {
   return SizedBox.expand(
       child: FractionallySizedBox(
     widthFactor: 3,
-    heightFactor: 0.65,
+    heightFactor: 1,
     alignment: FractionalOffset.bottomCenter,
     child: Image(
       image: AssetImage('images/background.png'),

@@ -1,14 +1,11 @@
 import 'package:auth_service/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_demo/pages/pet_list_page.dart';
-import 'package:flutter_chat_demo/pages/pet_tracker_page.dart';
+import 'package:flutter_chat_demo/pages/my_documents_page.dart';
 import 'package:flutter_chat_demo/pages/profile_page.dart';
-
-import 'chat_list_page.dart';
 
 class MyNavDrawer extends StatelessWidget {
   final Function() signOutFunction;
-  final Customer currentCustomer;
+  final Student currentCustomer;
 
   const MyNavDrawer(
       {Key? key, required this.signOutFunction, required this.currentCustomer})
@@ -29,17 +26,6 @@ class MyNavDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.catching_pokemon),
-            title: Text('My Pets'),
-            onTap: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          PetListPage(currentCustomer: currentCustomer)))
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.verified_user),
             title: Text('Profile'),
             onTap: () => {
@@ -48,30 +34,19 @@ class MyNavDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          ProfilePage(currentCustomer: currentCustomer)))
+                          ProfilePage(currentStudent: currentCustomer)))
             },
           ),
           ListTile(
-            leading: Icon(Icons.chat),
-            title: Text('Chat'),
-            onTap: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ChatListPage(currentCustomer: currentCustomer)))
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.map),
-            title: Text('Pet Tracker'),
+            leading: Icon(Icons.folder),
+            title: Text('My Documents'),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          PetTrackerPage(currentCustomer: currentCustomer)))
+                          MyDocumentsPage(currentStudent: currentCustomer)))
             },
           ),
           ListTile(

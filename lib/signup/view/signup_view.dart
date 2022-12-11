@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../api/customer_controller.dart';
+import '../../api/student_controller.dart';
 import '../../constants/app_constants.dart';
 import '../../constants/color_constants.dart';
 import '../../providers/auth_provider.dart';
@@ -19,13 +19,13 @@ class SignUpView extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUpView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: "amiel.tbpo@gmail.com");
+  final TextEditingController _passwordController = TextEditingController(text: "notCommonPassword123\$");
   final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController();
+      TextEditingController(text: "notCommonPassword123\$");
+  final TextEditingController _firstNameController = TextEditingController(text: "amiel");
   final TextEditingController _middleNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController(text: "danao");
 
   final _formKey = GlobalKey<FormState>();
   Status _status = Status.uninitialized;
@@ -200,6 +200,12 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstants.themeColor,
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                textStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
       onPressed: () => _submit(context),
       child: const Text('Create Account'),
     );
