@@ -1,9 +1,11 @@
 import 'package:auth_service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_demo/constants/color_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../api/student_controller.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/documents_widget.dart';
 import 'my_nav_drawer.dart';
 
 class MyDocumentsPage extends StatefulWidget {
@@ -41,14 +43,25 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
           },
         ),
         body: GridView(
+          shrinkWrap: true,
   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 1, 
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16
-  ),
-  padding: EdgeInsets.all(24),
+                  crossAxisCount: 1,
+                  childAspectRatio: 1.0,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 5,
+                  mainAxisExtent: 500,
+                ),
+  padding: EdgeInsets.all(25),
   children: [
-    Icon(Icons.folder_open_outlined, size: 100,),
+    DocumentCard(label: 'TOR (Transcript of records)',),
+    ElevatedButton.icon(
+      onPressed: () {},
+      icon: Icon( // <-- Icon
+        Icons.file_open,
+        size: 24.0,
+      ),
+      label: Text('TOR (Transcript of records)'), // <-- Text
+    ),
     Image.network('https://picsum.photos/250?image=2'),
     Image.network('https://picsum.photos/250?image=3'),
     Image.network('https://picsum.photos/250?image=4'),
