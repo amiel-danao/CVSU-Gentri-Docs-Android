@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../env.sample.dart';
 import '../login/view/login_view.dart';
+import '../models/document.dart';
 import '../pages/my_documents_page.dart';
 
 // Future<Customer> createProfile(Customer customer) async {
