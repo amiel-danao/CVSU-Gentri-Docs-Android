@@ -5,5 +5,6 @@ class Env {
   static const String URL_CUSTOMER_IMAGE =
       "$URL_PREFIX/api/upload_customer_image";
   static const String URL_DOCUMENT_LIST = "$URL_PREFIX/api/documentlist";
+  static const String URL_DOCUMENT = "$URL_PREFIX/api/mydocument";
   static const String URL_STUDENT = "$URL_PREFIX/api/student";
 }

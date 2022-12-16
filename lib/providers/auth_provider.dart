@@ -37,7 +37,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> isLoggedIn() async {
     bool isLoggedIn = await googleSignIn.isSignedIn();
-    if (isLoggedIn && prefs.getString(FirestoreConstants.id)?.isNotEmpty == true) {
+    if (isLoggedIn &&
+        prefs.getString(FirestoreConstants.id)?.isNotEmpty == true) {
       return true;
     } else {
       return false;
@@ -56,7 +57,8 @@ class AuthProvider extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
 
-      User? firebaseUser = (await firebaseAuth.signInWithCredential(credential)).user;
+      User? firebaseUser =
+          (await firebaseAuth.signInWithCredential(credential)).user;
 
       if (firebaseUser != null) {
         final QuerySnapshot result = await firebaseFirestore
@@ -66,7 +68,10 @@ class AuthProvider extends ChangeNotifier {
         final List<DocumentSnapshot> documents = result.docs;
         if (documents.length == 0) {
           // Writing data to server because here is a new user
-          firebaseFirestore.collection(FirestoreConstants.pathUserCollection).doc(firebaseUser.uid).set({
+          firebaseFirestore
+              .collection(FirestoreConstants.pathUserCollection)
+              .doc(firebaseUser.uid)
+              .set({
             FirestoreConstants.nickname: firebaseUser.displayName,
             FirestoreConstants.photoUrl: firebaseUser.photoURL,
             FirestoreConstants.id: firebaseUser.uid,
@@ -77,8 +82,10 @@ class AuthProvider extends ChangeNotifier {
           // Write data to local storage
           User? currentUser = firebaseUser;
           await prefs.setString(FirestoreConstants.id, currentUser.uid);
-          await prefs.setString(FirestoreConstants.nickname, currentUser.displayName ?? "");
-          await prefs.setString(FirestoreConstants.photoUrl, currentUser.photoURL ?? "");
+          await prefs.setString(
+              FirestoreConstants.nickname, currentUser.displayName ?? "");
+          await prefs.setString(
+              FirestoreConstants.photoUrl, currentUser.photoURL ?? "");
         } else {
           // Already sign up, just get data from firestore
           DocumentSnapshot documentSnapshot = documents[0];
@@ -107,7 +114,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> handleSignOut() async {
     _status = Status.uninitialized;
     await firebaseAuth.signOut();
-    await googleSignIn.disconnect();
-    await googleSignIn.signOut();
+    //await googleSignIn.disconnect();
+    //await googleSignIn.signOut();
   }
 }
