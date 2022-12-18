@@ -5,10 +5,10 @@ import 'package:flutter_chat_demo/pages/profile_page.dart';
 
 class MyNavDrawer extends StatelessWidget {
   final Function() signOutFunction;
-  final Student currentCustomer;
+  final Student currentStudent;
 
   const MyNavDrawer(
-      {Key? key, required this.signOutFunction, required this.currentCustomer})
+      {Key? key, required this.signOutFunction, required this.currentStudent})
       : super(key: key);
 
   Widget build(BuildContext context) {
@@ -30,23 +30,33 @@ class MyNavDrawer extends StatelessWidget {
             title: Text('Profile'),
             onTap: () => {
               Navigator.of(context).pop(),
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             ProfilePage(currentStudent: currentStudent)))
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          ProfilePage(currentStudent: currentCustomer)))
+                          ProfilePage(currentStudent: currentStudent)))
             },
           ),
           ListTile(
             leading: Icon(Icons.folder),
             title: Text('My Documents'),
             onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          MyDocumentsPage(currentStudent: currentCustomer)))
+                          MyDocumentsPage(currentStudent: currentStudent)))
+              // Navigator.of(context).pop(),
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             MyDocumentsPage(currentStudent: currentCustomer)))
             },
           ),
           ListTile(

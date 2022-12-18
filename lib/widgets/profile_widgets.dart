@@ -20,7 +20,7 @@ class ProfileAccountName extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width / INPUT_FIELD_DIVIDER,
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+        padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 16),
         child: TextFormField(
           controller: controller,
           keyboardType: TextInputType.name,
@@ -62,11 +62,9 @@ class ProfileAccountName extends StatelessWidget {
 }
 
 class ProfileAccountEmail extends StatelessWidget {
-  ProfileAccountEmail({
-    Key? key,
-    required this.emailController,
-    this.readOnly = false
-  }) : super(key: key);
+  ProfileAccountEmail(
+      {Key? key, required this.emailController, this.readOnly = false})
+      : super(key: key);
   final TextEditingController emailController;
   final bool readOnly;
 
@@ -201,7 +199,7 @@ class ProfileAccountPhone extends StatelessWidget {
           keyboardType: TextInputType.phone,
           validator: (value) {
             if (value == null) return null;
-            if (value.length != 10)
+            if (value.length != 11)
               return "Mobile Number must be of 10 digit";
             else
               return null;

@@ -99,6 +99,15 @@ class LoginViewState extends State<LoginView> {
       ]),
     );
   }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 }
 
 class _SubmitButton extends StatefulWidget {
@@ -126,11 +135,9 @@ class SubmitState extends State<_SubmitButton> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.themeColor,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                textStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
+          backgroundColor: ColorConstants.themeColor,
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () async {
         if (widget.formKey.currentState!.validate()) {
           try {

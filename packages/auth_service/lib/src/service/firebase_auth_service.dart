@@ -16,7 +16,7 @@ class FirebaseAuthService implements AuthService {
     }
 
     final map = <String, dynamic>{
-      'id': user.uid,
+      'user_id': user.uid,
       'firstname': firstName,
       'middlename': middleName,
       'lastname': lastName,
@@ -30,7 +30,10 @@ class FirebaseAuthService implements AuthService {
       return Student.empty();
     }
 
-    final map = <String, dynamic>{'id': user.uid, 'email': user.email ?? ''};
+    final map = <String, dynamic>{
+      'user_id': user.uid,
+      'email': user.email ?? ''
+    };
     return Student.fromJson(map);
   }
 

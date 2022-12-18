@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Student extends Equatable {
   const Student({
-    required this.id,
+    required this.userId,
     this.studentID,
     required this.firstName,
     this.middleName,
@@ -12,7 +12,7 @@ class Student extends Equatable {
     this.picture,
   });
 
-  final String id;
+  final String userId;
   final String? studentID;
   final String firstName;
   final String? middleName;
@@ -22,7 +22,7 @@ class Student extends Equatable {
   final String? picture;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
-        id: json['id'] ?? "",
+        userId: json['user_id'] ?? "",
         studentID: json['student_id'] ?? "",
         firstName: json['firstname'] ?? "",
         middleName: json['middlename'] ?? "",
@@ -33,7 +33,7 @@ class Student extends Equatable {
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
+        'user_id': userId,
         'student_id': studentID,
         'firstname': firstName,
         'middlename': middleName,
@@ -43,7 +43,7 @@ class Student extends Equatable {
       };
 
   factory Student.empty() => const Student(
-        id: "",
+        userId: "",
         studentID: "",
         firstName: "",
         middleName: "",
@@ -54,5 +54,5 @@ class Student extends Equatable {
       );
   @override
   List<Object?> get props =>
-      [id, firstName, middleName, lastName, email, mobile, picture];
+      [userId, firstName, middleName, lastName, email, mobile, picture];
 }

@@ -19,13 +19,17 @@ class SignUpView extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUpView> {
-  final TextEditingController _emailController = TextEditingController(text: "amiel.tbpo@gmail.com");
-  final TextEditingController _passwordController = TextEditingController(text: "notCommonPassword123\$");
+  final TextEditingController _emailController =
+      TextEditingController(text: "amiel.tbpo@gmail.com");
+  final TextEditingController _passwordController =
+      TextEditingController(text: "notCommonPassword123\$");
   final TextEditingController _confirmPasswordController =
       TextEditingController(text: "notCommonPassword123\$");
-  final TextEditingController _firstNameController = TextEditingController(text: "amiel");
+  final TextEditingController _firstNameController =
+      TextEditingController(text: "amiel");
   final TextEditingController _middleNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController(text: "danao");
+  final TextEditingController _lastNameController =
+      TextEditingController(text: "danao");
 
   final _formKey = GlobalKey<FormState>();
   Status _status = Status.uninitialized;
@@ -103,11 +107,11 @@ class SignUpState extends State<SignUpView> {
                       const SizedBox(height: 30.0),
                       _SubmitButton(
                           formKey: _formKey,
-                          firstName: _firstNameController.text,
-                          middleName: _middleNameController.text,
-                          lastName: _lastNameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
+                          firstName: _firstNameController,
+                          middleName: _middleNameController,
+                          lastName: _lastNameController,
+                          email: _emailController,
+                          password: _passwordController,
                           onStateChanged: (status) => setState(() {
                                 _status = status;
                               })),
@@ -123,6 +127,19 @@ class SignUpState extends State<SignUpView> {
         )
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _emailController.dispose();
+    _firstNameController.dispose();
+    _middleNameController.dispose();
+    _lastNameController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }
 
@@ -140,7 +157,7 @@ class _SubmitButton extends StatelessWidget {
 
   final formKey;
   final AuthStateCallback onStateChanged;
-  final String firstName, middleName, lastName, email, password;
+  final TextEditingController firstName, middleName, lastName, email, password;
   final AuthService _authService = FirebaseAuthService(
     authService: FirebaseAuth.instance,
   );
@@ -162,11 +179,11 @@ class _SubmitButton extends StatelessWidget {
       onStateChanged(Status.authenticating);
       await _authService
           .createUserWithEmailAndPassword(
-        firstName: firstName,
-        middleName: middleName,
-        lastName: lastName,
-        email: email,
-        password: password,
+        firstName: firstName.text,
+        middleName: middleName.text,
+        lastName: lastName.text,
+        email: email.text,
+        password: password.text,
       )
           .then((value) async {
         await createUserProfileIfNotExist(value, context)
@@ -201,11 +218,9 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstants.themeColor,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                textStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
+          backgroundColor: ColorConstants.themeColor,
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () => _submit(context),
       child: const Text('Create Account'),
     );

@@ -20,7 +20,7 @@ class MyDocumentsPage extends StatefulWidget {
 
 class _MyDocumentsPageState extends State<MyDocumentsPage> {
   late AuthProvider authProvider;
-  late String studentId;
+  late String userId;
   final fixedDocumentNames = {
     'TOR': 'TOR (Transcript of records)',
     'COG': 'COG (Certificate of Grades)',
@@ -36,7 +36,7 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
     getFixedDocumentNames();
 
     authProvider = context.read<AuthProvider>();
-    studentId = widget.currentStudent.id;
+    userId = widget.currentStudent.userId;
     refreshListView();
   }
 
@@ -51,7 +51,7 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
       defaultDocuments.add(DocumentCard(
         nameAbbr: fixedDocument.key,
         label: fixedDocument.value,
-        studentId: studentId,
+        studentId: userId,
         studentEmail: widget.currentStudent.email,
       ));
     }
@@ -69,7 +69,7 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
 
   Future<void> refreshListView() async {
     defaultDocuments = [];
-    var fetchedDocuments = await getMyDocuments(studentId);
+    var fetchedDocuments = await getMyDocuments(userId);
     var fetchedDocumentCards = <DocumentCard>[];
 
     for (var document in fetchedDocuments) {
@@ -99,7 +99,7 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
             backgroundColor: Colors.green[700],
           ),
           drawer: MyNavDrawer(
-            currentCustomer: widget.currentStudent,
+            currentStudent: widget.currentStudent,
             signOutFunction: () {
               handleSignOut(context, authProvider);
             },
@@ -113,29 +113,7 @@ class _MyDocumentsPageState extends State<MyDocumentsPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return defaultDocuments[index];
                 },
-              )
-
-              // GridView.builder(
-              //   // Set the grid view's item count to the number of items in the list
-              //   itemCount: defaultDocuments.length,
-              //   // Set the grid view's item builder function
-              //   itemBuilder: (context, index) {
-              //     // Return a widget for each item
-              //     return defaultDocuments[index];
-              //   },
-              //   shrinkWrap: true,
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 1,
-              //     // childAspectRatio: 1.0,
-              //     mainAxisExtent: 400,
-              //     crossAxisSpacing: 0.0,
-              //     mainAxisSpacing: 5,
-              //     // mainAxisExtent: 100,
-              //   ),
-              //   padding: EdgeInsets.all(25),
-              // ),
-
-              )),
+              ))),
     );
   }
 }

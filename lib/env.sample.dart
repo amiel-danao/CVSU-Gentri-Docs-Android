@@ -4,7 +4,7 @@ class Env {
   static const String URL_DEFAULT_PET_IMAGE =
       "$URL_PREFIX/static/logo/app_icon.png";
   static const String URL_CUSTOMER_IMAGE =
-      "$URL_PREFIX/api/upload_customer_image";
+      "$URL_PREFIX/api/upload_student_image";
   static const String URL_DOCUMENT_LIST = "/api/documentlist";
   static const String URL_DOCUMENT = "/api/mydocument";
   static const String URL_STUDENT = "$URL_PREFIX/api/student";

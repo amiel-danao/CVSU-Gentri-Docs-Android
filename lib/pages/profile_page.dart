@@ -35,14 +35,14 @@ class ProfilePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ProfilePageState(currentCustomer: currentStudent),
+      body: ProfilePageState(currentStudent: currentStudent),
     );
   }
 }
 
 class ProfilePageState extends StatefulWidget {
-  final Student currentCustomer;
-  ProfilePageState({Key? key, required this.currentCustomer}) : super(key: key);
+  final Student currentStudent;
+  ProfilePageState({Key? key, required this.currentStudent}) : super(key: key);
 
   @override
   State createState() => ProfilePageStateState();
@@ -65,19 +65,18 @@ class ProfilePageStateState extends State<ProfilePageState> {
   void initState() {
     super.initState();
     settingProvider = context.read<SettingProvider>();
-    String? picture = widget.currentCustomer.picture;
+    String? picture = widget.currentStudent.picture;
     photoUrl = picture!;
 
-    _emailController =
-        TextEditingController(text: widget.currentCustomer.email);
+    _emailController = TextEditingController(text: widget.currentStudent.email);
     _firstNameController =
-        TextEditingController(text: widget.currentCustomer.firstName);
+        TextEditingController(text: widget.currentStudent.firstName);
     _middleNameController =
-        TextEditingController(text: widget.currentCustomer.middleName);
+        TextEditingController(text: widget.currentStudent.middleName);
     _lastNameController =
-        TextEditingController(text: widget.currentCustomer.lastName);
+        TextEditingController(text: widget.currentStudent.lastName);
     _mobileController =
-        TextEditingController(text: widget.currentCustomer.mobile);
+        TextEditingController(text: widget.currentStudent.mobile);
   }
 
   @override
@@ -92,49 +91,50 @@ class ProfilePageStateState extends State<ProfilePageState> {
     super.dispose();
   }
 
-  void handleUpdateData() async {
+  Future<void> handleUpdateData() async {
     setState(() {
       isLoading = true;
     });
 
-    String uid = widget.currentCustomer.id;
-    Student updatedStudent = new Student(
-        id: uid,
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        email: _emailController.text,
-        middleName: _middleNameController.text,
-        mobile: _mobileController.text);
+    final body = {
+      'firstname': _firstNameController.text,
+      'middlename': _middleNameController.text,
+      'lastname': _lastNameController.text,
+      'email': _emailController.text,
+      'mobile': _mobileController.text
+    };
 
-    final jsonData = jsonEncode(updatedStudent.toJson());
+    final url = Uri.parse('${Env.URL_STUDENT}/${widget.currentStudent.userId}');
+    final patchResponse = await http.patch(url, body: body);
 
-    try {
-      final patchResponse = await http.patch(
-        Uri.parse('${Env.URL_STUDENT}/${widget.currentCustomer.id}'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonData,
+    if (patchResponse.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Update success'),
+        ),
       );
+      setState(() {
+        isLoading = false;
+      });
 
-      if (patchResponse.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Update success");
-        setState(() {
-          isLoading = false;
-        });
+      Student updatedStudent = Student.fromJson(jsonDecode(patchResponse.body));
 
-        updatedStudent = Student.fromJson(jsonDecode(patchResponse.body));
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    MyDocumentsPage(currentStudent: updatedStudent)));
-      }
+      Navigator.of(context).pop();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MyDocumentsPage(currentStudent: updatedStudent)));
+    } else {
+      setState(() {
+        isLoading = false;
+      });
 
-      print("Update failed : ${patchResponse.body.toString()}");
-    } catch (exception) {
-      print("Update failed : ${exception.toString()}");
-      Fluttertoast.showToast(msg: "Update failed : ${exception.toString()}");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Update failed : ${patchResponse.body.toString()}'),
+        ),
+      );
     }
   }
 
@@ -149,79 +149,80 @@ class ProfilePageStateState extends State<ProfilePageState> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   // Avatar
-                  CupertinoButton(
-                    onPressed: () {},
-                    child: Container(
-                      margin: EdgeInsets.all(20),
-                      child: avatarImageFile == null
-                          ? photoUrl.isNotEmpty
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(45),
-                                  child: Image.network(
-                                    photoUrl,
-                                    fit: BoxFit.cover,
-                                    width: 90,
-                                    height: 90,
-                                    errorBuilder:
-                                        (context, object, stackTrace) {
-                                      return Icon(
-                                        Icons.account_circle,
-                                        size: 90,
-                                        color: ColorConstants.greyColor,
-                                      );
-                                    },
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Container(
-                                        width: 90,
-                                        height: 90,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: ColorConstants.themeColor,
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : Icon(
-                                  Icons.account_circle,
-                                  size: 90,
-                                  color: ColorConstants.greyColor,
-                                )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(45),
-                              child: Image.file(
-                                avatarImageFile!,
-                                width: 90,
-                                height: 90,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        uploadImage(
-                            '${Env.URL_CUSTOMER_IMAGE}/${widget.currentCustomer.id}',
-                            'picture',
-                            {'id': widget.currentCustomer.id},
-                            context,
-                            (value) => setState(() {
-                                  photoUrl = value;
-                                }));
-                      },
-                      child: Text('Change Photo')),
+                  // CupertinoButton(
+                  //   onPressed: () {},
+                  //   child: Container(
+                  //     margin: EdgeInsets.all(10),
+                  //     child: avatarImageFile == null
+                  //         ? photoUrl.isNotEmpty
+                  //             ? ClipRRect(
+                  //                 borderRadius: BorderRadius.circular(45),
+                  //                 child: Image.network(
+                  //                   photoUrl,
+                  //                   fit: BoxFit.cover,
+                  //                   width: 90,
+                  //                   height: 90,
+                  //                   errorBuilder:
+                  //                       (context, object, stackTrace) {
+                  //                     return Icon(
+                  //                       Icons.account_circle,
+                  //                       size: 90,
+                  //                       color: ColorConstants.greyColor,
+                  //                     );
+                  //                   },
+                  //                   loadingBuilder: (BuildContext context,
+                  //                       Widget child,
+                  //                       ImageChunkEvent? loadingProgress) {
+                  //                     if (loadingProgress == null) return child;
+                  //                     return Container(
+                  //                       width: 90,
+                  //                       height: 90,
+                  //                       child: Center(
+                  //                         child: CircularProgressIndicator(
+                  //                           color: ColorConstants.themeColor,
+                  //                           value: loadingProgress
+                  //                                       .expectedTotalBytes !=
+                  //                                   null
+                  //                               ? loadingProgress
+                  //                                       .cumulativeBytesLoaded /
+                  //                                   loadingProgress
+                  //                                       .expectedTotalBytes!
+                  //                               : null,
+                  //                         ),
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                 ),
+                  //               )
+                  //             : Icon(
+                  //                 Icons.account_circle,
+                  //                 size: 90,
+                  //                 color: ColorConstants.greyColor,
+                  //               )
+                  //         : ClipRRect(
+                  //             borderRadius: BorderRadius.circular(45),
+                  //             child: Image.file(
+                  //               avatarImageFile!,
+                  //               width: 90,
+                  //               height: 90,
+                  //               fit: BoxFit.cover,
+                  //             ),
+                  //           ),
+                  //   ),
+                  // ),
+                  // TextButton(
+                  //     onPressed: () {
+                  //       uploadImage(
+                  //           '${Env.URL_CUSTOMER_IMAGE}/${widget.currentStudent.userId}',
+                  //           'picture',
+                  //           {'user_id': widget.currentStudent.userId},
+                  //           context,
+                  //           (value) => setState(() {
+                  //                 photoUrl = value;
+                  //               }));
+                  //     },
+                  //     child: Text('Change Photo')),
+                  const SizedBox(height: 20.0),
                   Form(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: _formKey,
@@ -229,9 +230,8 @@ class ProfilePageStateState extends State<ProfilePageState> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Text('Student No: ${widget.currentStudent.studentID}'),
                         const SizedBox(height: 15.0),
-                        Text('Student No.'),
-                        const SizedBox(height: 30.0),
                         ProfileAccountName(
                           controller: _firstNameController,
                           placeHolder: 'First name',
@@ -244,12 +244,12 @@ class ProfilePageStateState extends State<ProfilePageState> {
                               return null;
                           },
                         ),
-                        const SizedBox(height: 30.0),
+                        const SizedBox(height: 15.0),
                         ProfileAccountName(
                           controller: _middleNameController,
                           placeHolder: 'Middle name',
                         ),
-                        const SizedBox(height: 30.0),
+                        const SizedBox(height: 15.0),
                         ProfileAccountName(
                           controller: _lastNameController,
                           placeHolder: 'Last name',
@@ -262,11 +262,14 @@ class ProfilePageStateState extends State<ProfilePageState> {
                               return null;
                           },
                         ),
-                        const SizedBox(height: 30.0),
-                        ProfileAccountEmail(emailController: _emailController, readOnly: true,),
-                        const SizedBox(height: 30.0),
+                        const SizedBox(height: 15.0),
+                        ProfileAccountEmail(
+                          emailController: _emailController,
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 15.0),
                         ProfileAccountPhone(phoneController: _mobileController),
-                        const SizedBox(height: 30.0),
+                        const SizedBox(height: 15.0),
                       ],
                     ),
                   ),
@@ -295,7 +298,6 @@ class ProfilePageStateState extends State<ProfilePageState> {
                         ),
                       ),
                     ),
-                    margin: EdgeInsets.only(top: 50, bottom: 50),
                   ),
                 ],
               ),

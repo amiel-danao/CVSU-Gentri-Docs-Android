@@ -27,21 +27,21 @@ void gotoHomePage(value, context) {
 }
 
 Future<String> createUserProfileIfNotExist(
-    Student customer, BuildContext context) async {
-  if (customer.email.isEmpty || customer.id.isEmpty) {
+    Student student, BuildContext context) async {
+  if (student.email.isEmpty || student.userId.isEmpty) {
     Fluttertoast.showToast(msg: "Invalid login input!");
     throw Exception("Invalid login input!");
   }
 
   final response =
-      await http.get(Uri.parse('${Env.URL_STUDENT}/${customer.id}'));
+      await http.get(Uri.parse('${Env.URL_STUDENT}/${student.userId}'));
 
   if (response.statusCode == 200) {
     Student fetchedCustomer = Student.fromJson(jsonDecode(response.body));
     gotoHomePage(fetchedCustomer, context);
     return "OK";
   } else {
-    final jsonData = jsonEncode(customer.toJson());
+    final jsonData = jsonEncode(student.toJson());
 
     final createResponse = await http.post(
       Uri.parse('${Env.URL_STUDENT}'),
@@ -53,7 +53,7 @@ Future<String> createUserProfileIfNotExist(
 
     if (createResponse.statusCode == 201) {
       // func();
-      gotoHomePage(customer, context);
+      gotoHomePage(student, context);
       return "OK";
       // return Customer.fromJson(jsonDecode(response.body));
     }
